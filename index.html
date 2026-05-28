@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tanvi Sayande | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --card: #1a1a1a;
+    --border: #2a2a2a;
+    --accent: #c8f56a;
+    --accent2: #6af5c8;
+    --text: #f0ede6;
+    --muted: #888;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 5vw;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 1.3rem; color: var(--accent); letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(200,245,106,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 700px; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.05; font-weight: 700; margin-bottom: 1rem;
+    opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted); max-width: 480px; margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.6s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.6s 0.8s forwards;
+  }
+  .btn {
+    display: inline-block; padding: 0.8rem 2rem;
+    border-radius: 100px; font-family: var(--font-body); font-size: 0.9rem;
+    text-decoration: none; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
+  }
+  .btn-primary { background: var(--accent); color: #0d0d0d; font-weight: 500; border: none; }
+  .btn-primary:hover { background: #d8ff88; transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  section { padding: 6rem 5vw; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 3rem; line-height: 1.1; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: border-color 0.2s; }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-num { font-family: var(--font-display); font-size: 2.2rem; color: var(--accent); }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: all 0.2s; }
+  .skill-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+  .skill-card h3 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag { font-size: 0.8rem; padding: 0.3rem 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 100px; color: var(--text); }
+
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 2rem; transition: all 0.2s; max-width: 800px; }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .project-badge { display: inline-block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 100px; padding: 0.2rem 0.7rem; margin-bottom: 1rem; }
+  .project-card h3 { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 0.8rem; }
+  .project-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.2rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent); text-decoration: none; font-size: 0.85rem; border: 1px solid var(--accent); padding: 0.5rem 1.2rem; border-radius: 100px; transition: all 0.2s; white-space: nowrap; }
+  .project-link:hover { background: var(--accent); color: #0d0d0d; }
+
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color 0.2s; }
+  .cert-card:hover { border-color: var(--accent); }
+  .cert-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(200,245,106,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+  .cert-name { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.2rem; }
+  .cert-org { font-size: 0.78rem; color: var(--muted); }
+
+  .contact-inner { max-width: 600px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 3rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; transition: all 0.2s; font-size: 0.95rem; }
+  .contact-item:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-item span:first-child { font-size: 1.2rem; }
+
+  footer { text-align: center; padding: 2rem 5vw; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .project-card { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">TS</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#project">Project</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to Opportunities</div>
+    <h1 class="hero-name">Tanvi<br/><span>Sayande</span></h1>
+    <p class="hero-sub">Electrical Engineering student with a passion for software development — building real things with Java, Python & the Web.</p>
+    <div class="hero-btns">
+      <a href="#project" class="btn btn-primary">View Project</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label reveal">About me</div>
+  <h2 class="section-title reveal">Engineering meets<br/>curiosity</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a final-year B.E. (Electrical) student at Prof. Ram Meghe College of Engineering and Management, Amravati — with a growing passion for software development and emerging technologies.</p>
+      <p>Despite an Electrical background, I've self-driven my way into Java, Python, full-stack web development, and cloud computing. I believe the best engineers are the ones who never stop learning.</p>
+      <p>Outside of tech, I've demonstrated leadership as an NSS volunteer and earned recognition in sports — skills I bring into every team I'm part of.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Certifications earned</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Internships completed</div></div>
+      <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Languages spoken</div></div>
+      <div class="stat-card"><div class="stat-num">2026</div><div class="stat-label">Graduating year</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background: var(--surface);">
+  <div class="section-label reveal">What I know</div>
+  <h2 class="section-title reveal">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <h3>Programming</h3>
+      <div class="skill-tags">
+        <span class="tag">Java</span><span class="tag">Core Java</span><span class="tag">OOP</span>
+        <span class="tag">Collections</span><span class="tag">Exception Handling</span><span class="tag">Python</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Web Technologies</h3>
+      <div class="skill-tags">
+        <span class="tag">HTML5</span><span class="tag">CSS3</span>
+        <span class="tag">JavaScript</span><span class="tag">Spring Boot</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Tools & Platforms</h3>
+      <div class="skill-tags">
+        <span class="tag">GitHub</span><span class="tag">VS Code</span>
+        <span class="tag">Eclipse</span><span class="tag">AWS</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Core Concepts</h3>
+      <div class="skill-tags">
+        <span class="tag">OOP Principles</span><span class="tag">Data Structures</span>
+        <span class="tag">Problem Solving</span><span class="tag">Generative AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="section-label reveal">What I built</div>
+  <h2 class="section-title reveal">Featured Project</h2>
+  <div class="project-card reveal">
+    <div>
+      <div class="project-badge">HTML · CSS · JavaScript</div>
+      <h3>Personal Portfolio Website</h3>
+      <p>A fully responsive personal portfolio website built from scratch to showcase my skills, certifications, internship experience, and contact information. Designed with a dark aesthetic and smooth scroll animations. Hosted live on GitHub Pages.</p>
+      <div class="project-stack">
+        <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span>
+        <span class="tag">GitHub Pages</span><span class="tag">Responsive Design</span>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0.8rem;">
+      <!-- UPDATE THESE LINKS WITH YOUR ACTUAL URLs -->
+      <a href="https://github.com/tanvisayande" target="_blank" class="project-link">⭐ GitHub</a>
+      <a href="#" class="project-link">🌐 Live Demo</a>
+    </div>
+  </div>
+</section>
+
+<section id="certifications" style="background: var(--surface);">
+  <div class="section-label reveal">Credentials</div>
+  <h2 class="section-title reveal">Certifications</h2>
+  <div class="cert-grid">
+    <div class="cert-card reveal"><div class="cert-icon">🔐</div><div><div class="cert-name">Introduction to Cybersecurity</div><div class="cert-org">Great Learning · Aug 2024</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">🤖</div><div><div class="cert-name">ChatGPT for Beginners</div><div class="cert-org">Great Learning · Sep 2024</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">✨</div><div><div class="cert-name">Generative AI for Beginners</div><div class="cert-org">Simplilearn · Feb 2025</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">💬</div><div><div class="cert-name">Introduction to Prompt Engineering</div><div class="cert-org">Simplilearn · Mar 2025</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">☁️</div><div><div class="cert-name">AWS Solutions Architecture</div><div class="cert-org">Forage · Mar 2025</div></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label reveal">Say hello</div>
+  <h2 class="section-title reveal">Get in Touch</h2>
+  <div class="contact-inner reveal">
+    <p style="color: var(--muted);">I'm currently open to apprenticeships and internship opportunities. Feel free to reach out!</p>
+    <div class="contact-links">
+      <a href="mailto:tanvisayande2509@gmail.com" class="contact-item"><span>📧</span><span>tanvisayande2509@gmail.com</span></a>
+      <a href="tel:+918830993278" class="contact-item"><span>📞</span><span>+91 8830993278</span></a>
+      <!-- UPDATE THESE WITH YOUR ACTUAL LINKEDIN & GITHUB URLS -->
+      <a href="https://linkedin.com/in/tanvisayande" target="_blank" class="contact-item"><span>💼</span><span>linkedin.com/in/tanvisayande</span></a>
+      <a href="https://github.com/tanvisayande" target="_blank" class="contact-item"><span>🐙</span><span>github.com/tanvisayande</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Tanvi Sayande · Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
